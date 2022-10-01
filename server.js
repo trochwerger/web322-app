@@ -44,7 +44,7 @@ app.get("/intlstudents", function(req,res){
 
 // setup a route to listen on no matching route
 app.use((req, res) => {
-  res.status(404).send("Page Not Found");
+  res.status(404).sendFile(path.join(__dirname,"/views/404.html"));
 });
 
 
