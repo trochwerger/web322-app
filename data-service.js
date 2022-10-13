@@ -46,6 +46,57 @@ module.exports = {
 			if (programs.length == 0) reject("no results returned");
 			resolve(programs);
 		});
-	}		
+	},
+	getStudentsByStatus: function(status){
+		return new Promise(function(resolve, reject){
+			let statusStudents = students.filter(function(student){
+				return  student.status== status.replace(/%/g, " ");;
+			});
+			if (statusStudents.length == 0) reject("no results returned");
+			resolve(statusStudents);
+		});
+	},
+	getStudentsByProgramCode: function(programCode){
+		return new Promise(function(resolve, reject){
+			let programStudents = students.filter(function(student){
+				return student.program == programCode;
+			});
+			if (programStudents.length == 0) reject("no results returned");
+			resolve(programStudents);
+		});
+	},
+	getStudentsByExpectedCredential: function(credential){
+		return new Promise(function(resolve, reject){
+			let credentialStudents = students.filter(function(student){
+				return student.expectedCredential == credential;
+			});
+			if (credentialStudents.length == 0) reject("no results returned");
+			resolve(credentialStudents);
+		});
+	},
+
+	getStudentById: function(sid){
+		return new Promise(function(resolve, reject){
+			let student = students.filter(function(student){
+				return student.studentID == sid;
+			});
+			if (!student) reject("no results returned");
+			resolve(student);
+		});
+	},
+	
+	addStudent: function(studentData){
+		return new Promise(function(resolve, reject){
+			if (studentData.isInternationalStudent == undefined) studentData.isInternationalStudent = false;
+			else studentData.isInternationalStudent = true;
+			let studentIDs = students.map(function(student){
+				return parseInt(student.studentID);
+			});
+			studentData.studentID = (Math.max(...studentIDs) + 1).toString();
+			students.push(studentData);
+			resolve();
+		});
+	}
+
 };
 

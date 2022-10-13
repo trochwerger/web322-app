@@ -8,7 +8,7 @@
 	<!-- Latest compiled and minified Bootstrap 3.3.7 CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<title>WEB322 - About</title>
+	<title>WEB322 - Home</title>
 </head>
 
 <body>
@@ -29,22 +29,44 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
-					<li><a href="#">About</a></li>
+					<li><a href="#">Home</a></li>
+					<li><a href="/about">About</a></li>
+					<li><a href="/students/add">Add Student</a></li>
+					<li class="active"><a href="/images/add">Add Image</a></li>
+
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="/students">Students</a></li>
 					<li><a href="/intlstudents">Int'l Students</a></li>
 					<li><a href="/programs">Program</a></li>
+					<li><a href="/images">Images</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div class="container">
 		<div class="row">
-			<aside class="col-md-12">
-				<h2>Page Not Found</h2>
-			</aside>
+			<div class="col-md-12">
+		
+				<h1>Add Image</h1>
+				<hr>
+		
+				<form method="post" action="/images/add" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="firstName">Image File:</label>
+								<input class="form-control" id="imageFile" name="imageFile" type="file">
+							</div>
+						</div>
+					</div>
+		
+					<hr>
+		
+					<input type="submit" class="btn btn-primary pull-right" value="Add Image"><br><br><br>
+		
+				</form>
+			</div>
 		</div>
 	</div>
 
