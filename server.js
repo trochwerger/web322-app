@@ -1,6 +1,8 @@
+
 /*********************************************************************************
-*  WEB322 – Assignment 02
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part *  of this assignment has been copied manually or electronically from any other source 
+*  WEB322 – Assignment 03
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
+*  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
 *  Name: Tomas Rochwerger Student ID: 159432210 Date: 09/30/2022
@@ -8,6 +10,7 @@
 *  Online (Cyclic) Link: https://filthy-tuna-pumps.cyclic.app
 *
 ********************************************************************************/ 
+
 
 const express = require("express");
 const multer = require("multer");
@@ -82,39 +85,6 @@ app.get("/students", function(req,res){
     .catch((err) => { res.json({message: err}); });
   }
 });
-
-// In addition to providing all of the students, this route must now also support the following optional filters (via the query string)
-// /students?status=value 
-// return a JSON string consisting of all students where value could be either "Full Time" or "Part Time" - this can be accomplished by calling the getStudentsByStatus(status) function of your data-service 
-
-// app.get("/students/:status", function(req,res){
-//   data.getStudentsByStatus(req.params.status)
-//   .then((data) => { res.json(data); })
-//   .catch((err) => { res.json({message: err}); });
-// });
-
-// students?program=value 
-// return a JSON string consisting of all students where value could be one of "ACF", "AVO", "DAN", "CPP", "CPA", …  (there are currently 10 programs in the dataset) " - this can be accomplished by calling the getStudentsByProgramCode(programCode) function of your data-service 
-// app.get("/students/:program", function(req,res){
-//   data.getStudentsByProgramCode(req.params.program)
-//   .then((data) => { res.json(data); })
-//   .catch((err) => { res.json({message: err}); });
-// });
-
-// /students?credential=value 
-// return a JSON string consisting of all students where value could be one of "Diploma", "Degree" and "Certificate" (there are currently 3 (expected) credentials in the dataset) " - this can be accomplished by calling the getStudentsByExpectedCredential(credential) function of your data-service (defined below)
-
-// app.get("/students/:credential", function(req,res){
-//   data.getStudentsByExpectedCredential(req.params.credential)
-//   .then((data) => { res.json(data); })
-//   .catch((err) => { res.json({message: err}); });
-// });
-
-// Add the "/student/value" route 
-// This route will return a JSON formatted string containing the student whose studentID matches the value.  For example, once the assignment is complete, http://localhost:8080/student/408862098  would return the student: Vivi Foulks - this can be accomplished by calling the getStudentById(sid) function of your data-service (defined below).
-
-
-//This route will return a JSON formatted string containing the student whose studentID matches the value.  For example, once the assignment is complete, http://localhost:8080/student/408862098  would return the student: Vivi Foulks - this can be accomplished by calling the getStudentById(sid) function of your data-service (defined below).
 
 app.get("/student/:value", function(req,res){
   let sid = req.params.value;
