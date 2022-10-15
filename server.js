@@ -81,8 +81,6 @@ app.get("/students", function(req,res){
     .then((data) => { res.json(data); })
     .catch((err) => { res.json({message: err}); });
   }
-
-
 });
 
 // In addition to providing all of the students, this route must now also support the following optional filters (via the query string)

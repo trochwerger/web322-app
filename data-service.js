@@ -33,7 +33,7 @@ module.exports = {
 
 	getInternationalStudents: function(){
 		return new Promise(function(resolve, reject){
-			let intlStudents = students.filter(function(student){
+			let intlStudents = students.filter(student =>{
 				return student.isInternationalStudent;
 			});
 			if (intlStudents.length == 0) reject("no results returned");
@@ -49,7 +49,7 @@ module.exports = {
 	},
 	getStudentsByStatus: function(status){
 		return new Promise(function(resolve, reject){
-			let statusStudents = students.filter(function(student){
+			let statusStudents = students.filter(student => {
 				return  student.status== status.replace(/%/g, " ");;
 			});
 			if (statusStudents.length == 0) reject("no results returned");
@@ -58,7 +58,7 @@ module.exports = {
 	},
 	getStudentsByProgramCode: function(programCode){
 		return new Promise(function(resolve, reject){
-			let programStudents = students.filter(function(student){
+			let programStudents = students.filter(student =>{
 				return student.program == programCode;
 			});
 			if (programStudents.length == 0) reject("no results returned");
@@ -67,7 +67,7 @@ module.exports = {
 	},
 	getStudentsByExpectedCredential: function(credential){
 		return new Promise(function(resolve, reject){
-			let credentialStudents = students.filter(function(student){
+			let credentialStudents = students.filter(student =>{
 				return student.expectedCredential == credential;
 			});
 			if (credentialStudents.length == 0) reject("no results returned");
@@ -77,7 +77,7 @@ module.exports = {
 
 	getStudentById: function(sid){
 		return new Promise(function(resolve, reject){
-			let student = students.filter(function(student){
+			let student = students.filter(student =>{
 				return student.studentID == sid;
 			});
 			if (!student) reject("no results returned");
