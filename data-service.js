@@ -96,7 +96,20 @@ module.exports = {
 			students.push(studentData);
 			resolve();
 		});
-	}
+	},
 
+	updateStudent: function(studentData){
+		return new Promise(function(resolve, reject){
+			let student = students.filter(student =>{
+				return student.studentID == studentData.studentID;
+			});
+			if (!student) reject("student not found");
+			else {
+				let index = students.indexOf(student[0]);
+				students[index] = studentData;
+				resolve();
+			}
+		});
+	}
 };
 

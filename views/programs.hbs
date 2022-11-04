@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Programs</h2>
+			<hr>
+			<div class="table-responsive">
+				<table class="table ">
+					<thead>
+						<tr>
+							<th>Program Code</th>
+							<th>Program Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each programs}}
+						<tr>
+							<td><a href="/students?program={{this.programCode}}">{{this.programCode}}</a></td>
+							<td><a href="/students?program={{this.programCode}}">{{this.programName}}</a></td>
+						</tr>
+						{{/each}}
+						{{#unless programs}}
+							<div class="col-md-12 text-center">
+								<strong>{{message}}</strong>
+							</div>
+						{{/unless}}
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+</div>

@@ -1,0 +1,60 @@
+{{!-- <div class="row">
+	<div class="col-md-12">
+		<h2>Students</h2>
+		<hr />
+
+		<p>
+			{{#each students}}
+				<h4> {{this.firstName}} {{this.lastName}}</h4>
+			{{else}}
+			<tr>
+				<td colspan="4">No Data Available</td>
+			</tr>
+			{{/each}}
+		</p>
+
+	</div>
+</div> --}}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Students</h2>
+			<hr>
+			<div class="table-responsive">
+				<table class="table ">
+					<thead>
+						<tr>
+							<th>Student&nbsp;ID</th>
+							<th>Full&nbsp;Name</th>
+							<th>Email</th>
+							<th>Address</th>
+							<th>Expected&nbsp;Credential</th>
+							<th>Status</th>
+							<th>Program</th>
+							<th>Registration&nbsp;Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each students}}
+						<tr>
+							<td><a href="/student/{{this.studentID}}">{{this.studentID}}</a></td>
+							<td>{{this.firstName}} {{this.lastName}}</td>
+							<td><a href="mailto:{{this.email}}">{{this.email}}</a></td>
+							<td>{{this.addressStreet}}<br>{{this.addressCity}}<br>{{this.addressState}} {{this.addressPostal}}</td>
+							<td><a href="/students?credential={{this.expectedCredential}}">{{this.expectedCredential}}</a></td>
+							<td><a href="/students?status={{this.status}}">{{this.status}}</a></td>
+							<td><a href="/students?program={{this.program}}">{{this.program}}</a></td>
+							<td>8/20/2021</td>
+						</tr>
+						{{/each}}
+						{{#unless students}}
+							<div class="col-md-12 text-center">
+								<strong>{{message}}</strong>
+							</div>
+						{{/unless}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
