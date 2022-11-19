@@ -1,7 +1,7 @@
 
 /*********************************************************************************
-*  WEB322 – Assignment 04
-*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  No part 
+*  WEB322 – Assignment 05
+*  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.    No part 
 *  of this assignment has been copied manually or electronically from any other source 
 *  (including 3rd party web sites) or distributed to other students.
 * 
@@ -49,8 +49,6 @@ app.use(function(req, res, next){
     next();
 });
 
-
-
 // call this function after the http server starts listening for requests
 function onHttpStart() {
   console.log("Express http server listening on port: " + HTTP_PORT);
@@ -71,85 +69,15 @@ app.get("/", function(req,res){
 });
 
 
-
 // setup another route to listen on /about
 app.get("/about", function(req,res){
     res.render('about');
 });
 
-app.get("/students/add", function(req, res){
-  res.render('addStudent');
-  app.locals.activeRoute = "/students/add";
-});
-
+// Images Routing
 app.get("/images/add", function(req, res){
   res.render('addImage')
 });
-
-app.get("/programs", function(req,res){
-    data.getPrograms()
-    .then((data) => { res.render("programs", {programs:data})})
-    .catch((err) => { res.render("programs", {message: "no results"}); });
-});
-
-app.get("/students", function(req,res){
-  if (req.query.status){
-    let status = req.query.status;
-    data.getStudentsByStatus(status)
-    .then((data) => { res.render("students", {students: data}); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-  }
-  else if (req.query.program){
-    let programCode = req.query.program;
-    data.getStudentsByProgramCode(programCode)
-    .then((data) => { res.render("students", {students: data}); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-  }
-  else if (req.query.credential){
-    let credential = req.query.credential;
-    data.getStudentsByExpectedCredential(credential)
-    .then((data) => { res.render("students", {students: data}); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-  } else{
-    data.getAllStudents()
-    .then((data) => { res.render("students", {students: data}); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-  }
-});
-
-app.get("/student/:studentId", function(req,res){
-  let sid = req.params.studentId;
-  data.getStudentById(sid)
-  .then((data) => { res.render("student", {student: data}); })
-  .catch((err) => { res.render("student", {message: "no results"}); });
-});
-
-
-app.get("/intlstudents", function(req,res){
-    data.getInternationalStudents()
-    .then((data) => { res.render("students", {students: data}); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-});
-
-app.post("/images/add", upload.single("imageFile"), (req,res) => {
-  res.redirect("/images");
-});
-
-app.post("/students/add", function(req, res) {
-  data.addStudent(req.body)
-  .then(() => { res.redirect("/students"); })
-  .catch((err) => { res.render("students", {message: "no results"}); });
-});
-
-app.post("/student/update", (req, res) => {
-      //invoke the updateStudent() method with the req.body as the parameter
-    //Once the promise is resolved use the then() callback to execute the res.redirect("/students"); code
-    //If the promise is rejected, use the catch() callback to execute the res.render("students", {message: "no results"}); code
-    data.updateStudent(req.body)
-    .then(() => { res.redirect("/students"); })
-    .catch((err) => { res.render("students", {message: "no results"}); });
-});
-
 
 app.get("/images", function(req,res){
   fs.readdir("./public/images/uploaded", function(err, items) {
@@ -158,6 +86,181 @@ app.get("/images", function(req,res){
     });
   });
 });
+
+app.post("/images/add", upload.single("imageFile"), (req,res) => {
+  res.redirect("/images");
+});
+
+app.get("/programs", function(req,res){
+    data.getPrograms()
+    .then((data) => { 
+      if (data.length > 0) {
+        res.render('programs', {programs: data});
+      } else {
+        res.render('programs', {message: "no results"});
+      }
+    })
+    .catch((err) => { res.render("programs", {message: "no results"}); });
+});
+
+app.get("/programs/add", function(req, res){
+  res.render('addProgram');
+});
+
+app.post("/programs/add", function(req, res){
+  console.log(req.body);
+  data.addProgram(req.body)
+  .then(() => res.redirect("/programs"))
+  .catch((err) => res.json({message: err}));
+});
+
+app.post("/program/update", function(req, res){
+  data.updateProgram(req.body)
+  .then(() => res.redirect("/programs"))
+  .catch((err) => res.json({message: err}));
+});
+
+app.get("/programs/delete/:programCode", function(req, res){
+  console.log(req.params.programCode);
+  data.deleteProgramByCode(req.params.programCode)
+  .then((data) => {
+    res.redirect("/programs");
+  })
+  .catch((err) => { res.status(500).send("Unable to Remove Program / Program not found"); });
+});
+
+app.get("/program/:programCode", function(req, res){
+  data.getProgramByCode(req.params.programCode)
+  .then((data) => {
+    console.log(data);
+    res.render("program", {program: data});
+  })
+  .catch((err) => { res.render("program", {message: "no results"}); });
+});
+
+// Students Routing
+
+app.get("/students", function(req,res){
+  if (req.query.status){
+    data.getStudentsByStatus(req.query.status)
+    .then((data) => {
+      if (data.length > 0){
+        res.render("students", {students:data})
+      } else {
+        res.render("students", {message: "no results"});
+      }
+    }
+    )
+    .catch((err) => { res.render("students", {message: "no results"}); });
+  } else if (req.query.program){
+    data.getStudentsByProgram(req.query.program)
+    .then((data) => {
+      if (data.length > 0){
+        res.render("students", {students:data})
+      } else {
+        res.render("students", {message: "no results"});
+      }
+    })
+    .catch((err) => { res.render("students", {message: "no results"}); });
+    } else if (req.query.credential){
+      let credential = req.query.credential;
+      data.getStudentsByExpectedCredential(credential)
+    .then((data) => {
+      if (data.length > 0){
+        res.render("students", {students:data})
+      }
+      else {
+        res.render("students", {message: "no results"});
+      }
+    })
+    .catch((err) => { res.render("students", {message: "no results"}); });
+  } else{
+    data.getAllStudents()
+    .then((data) => {
+      if (data.length > 0){
+        console.log("Data: ", data);
+        res.render("students", {students:data})
+      }
+      else {
+        res.render("students", {message: "no results"});
+      }
+    }
+    )
+    .catch((err) => { res.render("students", {message: "no results"}); });
+  }
+});
+
+app.get("/intlstudents", function(req,res){
+    data.getInternationalStudents()
+    .then((data) => { res.render("students", {students: data}); })
+    .catch((err) => { res.render("students", {message: "no results"}); });
+});
+
+app.get("/students/add", function(req,res){
+  data.getPrograms()
+  .then((data) => {
+    res.render("addStudent", {programs: data});
+  })
+  .catch((err) => {
+    res.render("addStudent", {programs: []});
+  });
+});
+
+app.post("/students/add", function(req,res){
+  console.log(req.body);
+  data.addStudent(req.body)
+  .then(() => res.redirect("/students"))
+  .catch((err) => res.json({message: err}));
+});
+
+app.post("/student/update", (req, res) => { 
+    data.updateStudent(req.body)
+    .then(() => { res.redirect("/students"); })
+    .catch((err) => { res.render("students", {message: "no results"}); });
+
+});
+
+
+app.get("/student/:studentId", (req, res) => {
+    // initialize an empty object to store the values
+    let viewData = {};
+
+    dataService.getStudentById(req.params.studentId).then((data) => {
+        if (data) {
+            viewData.student = data; //store student data in the "viewData" object as "student"
+        } else {
+            viewData.student = null; // set student to null if none were returned
+        }
+    }).catch(() => {
+        viewData.student = null; // set student to null if there was an error 
+    }).then(dataService.getPrograms)
+    .then((data) => {
+        viewData.programs = data; // store program data in the "viewData" object as "programs"
+
+        // loop through viewData.programs and once we have found the programCode that matches
+        // the student's "program" value, add a "selected" property to the matching 
+        // viewData.programs object
+
+        for (let i = 0; i < viewData.programs.length; i++) {
+            if (viewData.programs[i].programCode == viewData.student.program) {
+                viewData.programs[i].selected = true;
+            }
+        }
+
+    }).catch(() => {
+        viewData.programs = []; // set programs to empty if there was an error
+    }).then(() => {
+        if (viewData.student == null) { // if no student - return an error
+            res.status(404).send("Student Not Found");
+        } else {
+            res.render("student", { viewData: viewData }); // render the "student" view
+        }
+    }).catch((err)=>{
+        res.status(500).send("Unable to Show Students");
+      });
+});
+
+
 
 // setup a route to listen on no matching route
 app.use((req, res) => {

@@ -1,14 +1,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			{{#each student}}
-			<h2>{{this.firstName}} {{this.lastName}}</h2>
-			<h4>Student ID: {{this.studentID}}</h4>
+			<h2>{{viewData.student.firstName}} {{viewData.student.lastName}}</h2>
+			<h4>Student ID: {{viewData.student.studentID}}</h4>
 			<hr>
 
 			<form method="post" action="/student/update">
 
-				<input type="hidden" name="studentID" value="{{this.studentID}}">
+				<input type="hidden" name="studentID" value="{{viewData.student.studentID}}">
 
 				<fieldset>
 					<legend>Personal Information</legend>
@@ -16,13 +15,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="firstName">First Name:</label>
-								<input class="form-control" id="firstName" name="firstName" type="text" value="{{this.firstName}}">
+								<input class="form-control" id="firstName" name="firstName" type="text" value="{{viewData.student.firstName}}">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="lastName">Last Name:</label>
-								<input class="form-control" id="last_name" name="lastName" type="text" value="{{this.lastName}}">
+								<input class="form-control" id="last_name" name="lastName" type="text" value="{{viewData.student.lastName}}">
 							</div>
 						</div>
 					</div>
@@ -31,13 +30,13 @@
 							<div class="form-group">
 								<label for="email">Email:</label>
 								<input class="form-control" id="email" name="email" type="text"
-									value="{{this.email}}">
+									value="{{viewData.student.email}}">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="phone">Phone:</label>
-								<input class="form-control" id="phone" name="phone" type="tel" value="{{this.phone}}">
+								<input class="form-control" id="phone" name="phone" type="tel" value="{{viewData.student.phone}}">
 							</div>
 						</div>
 					</div>
@@ -46,34 +45,30 @@
 							<div class="form-group">
 								<label for="addressStreet">Address (Street):</label>
 								<input class="form-control" id="addressStreet" name="addressStreet" type="text"
-									value="{{this.addressStreet}}e">
+									value="{{viewData.student.addressStreet}}e">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<label for="addressCity">Address (City):</label>
 							<input class="form-control" id="addressCity" name="addressCity" type="text"
-								value="{{this.addressCity}}">
+								value="{{viewData.student.addressCity}}">
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="addressState">Address (State):</label>
 								<input class="form-control" id="addressState" name="addressState" type="text"
-									value="{{this.addressState}}">
+									value="{{viewData.student.addressState}}">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="addressPostal">Address (Postal):</label>
 								<input class="form-control" id="addressPostal" name="addressPostal" type="text"
-									value="{{this.addressPostal}}">
+									value="{{viewData.student.addressPostal}}">
 							</div>
 						</div>
 					</div>
 
-
-				</fieldset>
-
-				<fieldset>
 					<div class="row">
 						<div class="col-md-3">
 							<div class="form-group">
@@ -90,21 +85,16 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="program">Program</label>
-								<select class="form-control" name="program" id="program">
-									<option value="ACF">ACF - Accounting and Finance</option>
-									<option value="AVO">AVO - Aviation Operations</option>
-									<option value="DAN">DAN - 3D Animation</option>
-									<option value="CPP">CPP - Computer Programming</option>
-									<option value="CPA">CPA - Computer Programming and Analysis</option>
-									<option value="CTY">CTY - Computer Systems Technology</option>
-									<option value="CSN">CSN - Computer Systems Technician</option>
-									<option value="BSD" selected="">BSD - Software Development (Honours Bachelor of
-										Technology)</option>
-									<option value="IFS">IFS - Informatics and Security(Honours Bachelor of Technology)
-									</option>
-									<option value="DAS">DAS - Data Science and Analytics program (Honours Bachelor of
-										Technology)</option>
-								</select>
+								{{#if viewData.programs}}
+									<select class="form-control" name="program" id="program">
+										<option value="">Select Program</option>
+										{{#each viewData.programs}}
+										<option value="{{programCode}}" {{#if selected}} selected {{/if}}> {{programCode}} - {{programName}} </option>
+										{{/each}}
+									</select>
+								{{else}}
+									<div>No Programs</div>
+								{{/if}}
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -118,8 +108,8 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="expectedCredential">Expected Credential:</label>
-								<input class="form-control" id="expectedCredential" name="expectedCredential"
-									type="text" value="Certificate">
+								<input class="form-control" id="expectedCredential" name="expectedCredential" type="text"
+									value="{{viewData.student.expectedCredential}}">
 							</div>
 						</div>
 					</div>
@@ -128,7 +118,7 @@
 							<div class="form-group">
 								<label for="registrationDate">Registration Date</label>
 								<input class="form-control" id="registrationDate" name="registrationDate" type="text"
-									value="8/20/2021" readonly="">
+									value="{{viewData.student.registrationDate}}">
 							</div>
 						</div>
 					</div>
@@ -138,7 +128,6 @@
 				<input type="submit" class="btn btn-primary pull-right" value="Update Student"><br><br><br>
 
 			</form>
-			{{/each}}
 		</div>
 	</div>
 </div>

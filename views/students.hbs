@@ -1,26 +1,10 @@
-{{!-- <div class="row">
-	<div class="col-md-12">
-		<h2>Students</h2>
-		<hr />
-
-		<p>
-			{{#each students}}
-				<h4> {{this.firstName}} {{this.lastName}}</h4>
-			{{else}}
-			<tr>
-				<td colspan="4">No Data Available</td>
-			</tr>
-			{{/each}}
-		</p>
-
-	</div>
-</div> --}}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h2>Students</h2>
+			<h2>Students <a href="/students/add" class="btn btn-success pull-right">Add New Student</a></h2>
 			<hr>
 			<div class="table-responsive">
+				{{#if students}}
 				<table class="table ">
 					<thead>
 						<tr>
@@ -44,16 +28,14 @@
 							<td><a href="/students?credential={{this.expectedCredential}}">{{this.expectedCredential}}</a></td>
 							<td><a href="/students?status={{this.status}}">{{this.status}}</a></td>
 							<td><a href="/students?program={{this.program}}">{{this.program}}</a></td>
-							<td>8/20/2021</td>
+							<td>{{this.registrationDate}}</td>
 						</tr>
 						{{/each}}
-						{{#unless students}}
-							<div class="col-md-12 text-center">
-								<strong>{{message}}</strong>
-							</div>
-						{{/unless}}
 					</tbody>
 				</table>
+				{{else}}
+				<p>No students found</p>
+				{{/if}}
 			</div>
 		</div>
 	</div>
