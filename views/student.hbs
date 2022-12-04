@@ -1,13 +1,19 @@
 <div class="container">
 	<div class="row">
+		{{#unless viewData}}
 		<div class="col-md-12">
-			<h2>{{viewData.student.firstName}} {{viewData.student.lastName}}</h2>
-			<h4>Student ID: {{viewData.student.studentID}}</h4>
+			<div class="alert alert-danger"> <strong>Error:</strong> {{errorMessage}}</div>
+		</div>
+		{{/unless}}
+		{{!-- {{#each viewData.student}} --}}
+		{{#if viewData}}
+		<div class="col-md-12">
+			<h2>{{student.firstName}} {{lastName}}</h2>
 			<hr>
 
 			<form method="post" action="/student/update">
 
-				<input type="hidden" name="studentID" value="{{viewData.student.studentID}}">
+				<input type="hidden" name="studentId" id="studentId" value="{{viewData.student.studentId}}">
 
 				<fieldset>
 					<legend>Personal Information</legend>
@@ -45,7 +51,7 @@
 							<div class="form-group">
 								<label for="addressStreet">Address (Street):</label>
 								<input class="form-control" id="addressStreet" name="addressStreet" type="text"
-									value="{{viewData.student.addressStreet}}e">
+									value="{{viewData.student.addressStreet}}">
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -85,6 +91,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="program">Program</label>
+								
 								{{#if viewData.programs}}
 									<select class="form-control" name="program" id="program">
 										<option value="">Select Program</option>
@@ -97,11 +104,12 @@
 								{{/if}}
 							</div>
 						</div>
+						
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="isInternationalStudent">International Student?</label>
 								<input class="form-control" type="checkbox" id="isInternationalStudent"
-									name="isInternationalStudent">
+									name="isInternationalStudent" {{#if viewData.student.isInternationalStudent}} checked {{/if}}>
 							</div>
 						</div>
 
@@ -129,6 +137,8 @@
 
 			</form>
 		</div>
+		{{/if}}
 	</div>
+
 </div>
   

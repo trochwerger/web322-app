@@ -1,0 +1,37 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			{{!-- • This (new) view simply renders the following table using the globally available session.user.loginHistory object
+			
+			Column Value
+			Login Date/Time
+			This will be the dateTime value for the current loginHistory object
+			Client Information This will be the userAgent value for the current loginHistory object
+			
+			• Additionally, in the page title <h2>…</h2> block, add the code to show the userName and email properties of the logged
+			in user (session.user) in the following format: userName ( email ) History --}}
+
+			<h2>{{session.user.userName}} ({{session.user.email}}) History</h2>
+			<hr>
+
+			<div class="table-responsive">
+				<table class="table ">
+					<thead>
+						<tr>
+							<th>Login Date/Time</th>
+							<th>Client Information</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{#each session.user.loginHistory}}
+						<tr>
+							<td>{{this.dateTime}}</td>
+							<td>{{this.userAgent}}</td>
+						</tr>
+						{{/each}}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

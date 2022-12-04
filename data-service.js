@@ -103,7 +103,7 @@ module.exports = {
 			Student.findAll({
 				where: {studentId: sid}
 			}).then((data) => {
-				resolve(data);
+				resolve(data[0]);
 			}
 			).catch((err) => {
 				reject("no results returned");
@@ -137,9 +137,12 @@ module.exports = {
 					studentData[key] = null;
 				}
 			}
+			
 			Student.update(studentData, {where: {studentId: studentData.studentId}}).then(() => {
 				resolve();
 			}).catch((err) => {
+				console.log(studentData);
+				console.log(err);
 				reject("unable to update student");
 			});
 		});
@@ -206,7 +209,6 @@ module.exports = {
 		});
 	},
 	deleteProgramByCode: function(programCode){
-		console.log(programCode);
 		return new Promise(function(resolve, reject){
 			Program.destroy({
 				where: {programCode: programCode}

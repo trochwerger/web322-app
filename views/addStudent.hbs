@@ -10,7 +10,7 @@
 
 				<fieldset>
 					<legend>Student Information</legend>
-					{{!-- <input type="hidden" name="studentID"> --}}
+					 <input type="hidden" name="studentID">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group">
@@ -91,7 +91,7 @@
 							<div class="form-group">
 								<label for="programCode">Program:</label>
 								{{#if programs}}
-									<select class="form-control" name="programCode" id="programCode">
+									<select class="form-control" name="program" id="program">
 										<option value="">Select Program</option>
 										{{#each programs}}
 											<option value="{{programCode}}"> {{programCode}} - {{programName}}</option>
