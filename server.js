@@ -225,7 +225,7 @@ app.get("/students",  ensureLogin, function(req,res){
     )
     .catch((err) => { res.render("students", {message: "no results"}); });
   } else if (req.query.program){
-    data.getStudentsByProgram(req.query.program)
+    data.getStudentsByProgramCode(req.query.program)
     .then((data) => {
       if (data.length > 0){
         res.render("students", {students:data})
